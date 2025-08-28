@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.API", "Cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Infrastructure", "CleanArchitecture.Infrastructure\CleanArchitecture.Infrastructure.csproj", "{2CA4C918-19CC-432D-8FEC-3B73FB1650A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Tests", "CleanArchitecture.Tests\CleanArchitecture.Tests.csproj", "{789FBF7A-8DF9-4BA5-8B5F-20A4332D4C77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{2CA4C918-19CC-432D-8FEC-3B73FB1650A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CA4C918-19CC-432D-8FEC-3B73FB1650A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CA4C918-19CC-432D-8FEC-3B73FB1650A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789FBF7A-8DF9-4BA5-8B5F-20A4332D4C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789FBF7A-8DF9-4BA5-8B5F-20A4332D4C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789FBF7A-8DF9-4BA5-8B5F-20A4332D4C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789FBF7A-8DF9-4BA5-8B5F-20A4332D4C77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
