@@ -1,5 +1,6 @@
 using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.ValueObjects;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,20 +20,25 @@ public class UserRepository : IUserRepository
         return await _context.Users.FindAsync(id);
     }
 
-    public async Task<User?> GetByEmailAsync(string email)
+    public async Task<User?> GetByEmailAsync(Email email)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task AddAsync(User user)
     {
         await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(User user)
+    public void UpdateAsync(User user)
     {
         _context.Users.Update(user);
-        await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistsAsync(Email email)
+    {
+        return await _context.Users
+            .AnyAsync(u => u.Email == email);
     }
 }

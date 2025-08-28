@@ -1,25 +1,17 @@
-using CleanArchitecture.Application.Commands;
-using CleanArchitecture.Application.DTOs;
-using MediatR;
+using CleanArchitecture.Application.Users.Commands.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : ApiControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public UsersController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
-    public async Task<ActionResult<UserDto>> CreateUser(CreateUserCommand command)
+    public async Task<ActionResult<int>> CreateUser(CreateUserCommand command)
     {
-        var user = await _mediator.Send(command);
-        return CreatedAtAction(nameof(CreateUser), user);
+        var result = await Mediator.Send(command);
+
+        return HandleResult(result);
     }
 }

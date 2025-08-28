@@ -1,10 +1,11 @@
 using CleanArchitecture.Domain.Exceptions;
+using CleanArchitecture.Domain.ValueObjects;
 
 namespace CleanArchitecture.Domain.Entities;
 
 public class User : EntityBase
 {
-    public string Email { get; private set; } = null!;
+    public Email Email { get; private set; } = null!;
 
     public string FirstName { get; private set; } = null!;
 
@@ -16,7 +17,7 @@ public class User : EntityBase
 
     private User() { }
 
-    public User(string email, string firstName, string lastName)
+    public User(Email email, string firstName, string lastName)
     {
         if (string.IsNullOrEmpty(email))
             throw new DomainException("Email is required");
