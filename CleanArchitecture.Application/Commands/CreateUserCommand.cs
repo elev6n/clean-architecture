@@ -3,10 +3,8 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Commands;
 
-public record class CreateUserCommand(
+public record CreateUserCommand(
     string Email,
     string FirstName,
     string LastName
-) : IRequest<UserDto>
-{
-}
+) : IRequest<UserDto>;

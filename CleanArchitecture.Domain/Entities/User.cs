@@ -2,10 +2,8 @@ using CleanArchitecture.Domain.Exceptions;
 
 namespace CleanArchitecture.Domain.Entities;
 
-public class User
+public class User : EntityBase
 {
-    public int Id { get; private set; }
-
     public string Email { get; private set; } = null!;
 
     public string FirstName { get; private set; } = null!;
@@ -13,6 +11,8 @@ public class User
     public string LastName { get; private set; } = null!;
 
     public DateOnly CreatedAt { get; private set; }
+
+    public DateOnly? UpdatedAt { get; private set; }
 
     private User() { }
 
