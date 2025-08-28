@@ -25,6 +25,7 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(CreateUserCommand).Assembly);
     cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+    cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
 });
 
 // FluentValidation
@@ -35,7 +36,7 @@ builder.Services.AddGlobalExceptionHandler();
 
 // Infrastructure
 var connectionString = builder.Configuration.GetConnectionString("Default")!;
-builder.Services.AddInfrastructure(connectionString);
+builder.Services.AddInfrastructure(connectionString, builder.Configuration);
 
 var app = builder.Build();
 

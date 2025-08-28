@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace CleanArchitecture.Application.Common.Models;
 
 public class Result
@@ -5,6 +7,7 @@ public class Result
     public bool Succeeded { get; }
     public string[] Errors { get; }
 
+    [JsonConstructor]
     protected Result(bool succeeded, IEnumerable<string> errors)
     {
         Succeeded = succeeded;
@@ -20,6 +23,7 @@ public class Result<T> : Result
 {
     public T? Value { get; }
 
+    [JsonConstructor]
     protected internal Result(T? value, bool succeeded, IEnumerable<string> errors)
         : base(succeeded, errors)
     {
