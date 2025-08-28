@@ -1,8 +1,12 @@
 using CleanArchitecture.API.Common;
 using CleanArchitecture.Application.Common.Behaviors;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Users.Commands.CreateUser;
 using CleanArchitecture.Infrastructure;
 using FluentValidation;
+using Hangfire;
+using Hangfire.Dashboard;
+using Hangfire.PostgreSql;
 using Hellang.Middleware.ProblemDetails;
 using MediatR;
 
@@ -34,6 +38,11 @@ builder.Services.AddValidatorsFromAssembly(typeof(CreateUserCommandValidator).As
 // Exception Handling
 builder.Services.AddGlobalExceptionHandler();
 
+// Hangfire
+builder.Services.AddHangfire(config => config
+    .UsePostgreSqlStorage(builder.Configuration.GetConnectionString("Default"))
+);
+
 // Infrastructure
 var connectionString = builder.Configuration.GetConnectionString("Default")!;
 builder.Services.AddInfrastructure(connectionString, builder.Configuration);
@@ -44,6 +53,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseOpenApi();
     app.MapOpenApi();
+    app.UseHangfireDashboard("/hangfire", new DashboardOptions
+    {
+        DashboardTitle = "Clean Architecture Jobs",
+        Authorization = [new HangfireAuthorizationFilter()]
+    });
 }
 
 app.UseHttpsRedirection();
@@ -51,4 +65,20 @@ app.UseAuthorization();
 app.UseProblemDetails();
 app.MapControllers();
 
+RecurringJob.AddOrUpdate<IDataCleanupService>(
+    "cleanup-old-data",
+    x => x.CleanupOldDataAsync(),
+    "0 2 * * *"
+);
+
 app.Run();
+
+// Фильтр авторизации для Dashboard
+public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
+{
+    public bool Authorize(DashboardContext context)
+    {
+        // В продакшене нужно добавить настоящую авторизацию
+        return true;
+    }
+}

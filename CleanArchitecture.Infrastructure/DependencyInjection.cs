@@ -15,7 +15,7 @@ namespace CleanArchitecture.Infrastructure;
 
 public static class DependencyInjection
 {
-    // [Obsolete]
+    [Obsolete]
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         string connectionString,
@@ -37,11 +37,14 @@ public static class DependencyInjection
 
         // Hangfire
         services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
-            .UsePostgreSqlStorage(connectionString)
-        );
-
+            .UsePostgreSqlStorage(connectionString, new PostgreSqlStorageOptions
+            {
+                SchemaName = "hangfire" // Отдельная схема для Hangfire
+            }));
+        
         services.AddHangfireServer();
 
         // JWT  
@@ -67,6 +70,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICacheService, RedisCacheService>();
         services.AddScoped<IBackgroundJobService, BackgroundJobService>();
+        services.AddScoped<IEmailService, EmailService>();
 
         services.AddSingleton<IJwtTokenGenerator>(provider =>
             new JwtTokenGenerator(

@@ -9,19 +9,23 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
 {
     private readonly IUserRepository _userRepository;
 
-    private readonly ILogger<CreateUserCommandHandler> _logger;
-
     private readonly IUnitOfWork _unitOfWork;
+
+    private readonly IBackgroundJobService _backgroundJobService;
+
+    private readonly ILogger<CreateUserCommandHandler> _logger;
 
     public CreateUserCommandHandler(
         IUserRepository userRepository,
-        ILogger<CreateUserCommandHandler> logger,
-        IUnitOfWork unitOfWork
+        IUnitOfWork unitOfWork,
+        IBackgroundJobService backgroundJobService,
+        ILogger<CreateUserCommandHandler> logger
     )
     {
         _userRepository = userRepository;
-        _logger = logger;
         _unitOfWork = unitOfWork;
+        _backgroundJobService = backgroundJobService;
+        _logger = logger;
     }
 
     public async Task<Result<int>> Handle(
@@ -43,8 +47,11 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Resul
                 request.LastName
             );
             await _userRepository.AddAsync(user);
-
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            _backgroundJobService.Enqueue<IEmailService>(x =>
+                x.SendWelcomeEmail(user.Email.Value, user.FirstName)
+            );
 
             _logger.LogInformation("User created with ID: {UserId}", user.Id);
 
