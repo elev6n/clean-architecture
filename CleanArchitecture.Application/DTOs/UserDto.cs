@@ -10,5 +10,5 @@ public class UserDto
 
     public string LastName { get; set; } = null!;
 
-    public DateTime CreatedAt { get; set; }
+    public DateOnly CreatedAt { get; set; }
 }

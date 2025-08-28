@@ -12,7 +12,7 @@ public class User
 
     public string LastName { get; private set; } = null!;
 
-    public DateTime CreatedAt { get; private set; }
+    public DateOnly CreatedAt { get; private set; }
 
     private User() { }
 
@@ -24,7 +24,7 @@ public class User
         Email = email;
         FirstName = firstName;
         LastName = lastName;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateOnly.FromDateTime(DateTime.Now);
     }
 
     public void UpdateName(string firstName, string lastName)
