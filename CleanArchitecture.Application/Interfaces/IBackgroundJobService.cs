@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace CleanArchitecture.Domain.Interfaces;
+namespace CleanArchitecture.Application.Interfaces;
 
 public interface IBackgroundJobService
 {

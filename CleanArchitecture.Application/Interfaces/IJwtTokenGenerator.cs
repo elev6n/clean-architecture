@@ -1,4 +1,4 @@
-namespace CleanArchitecture.Domain.Interfaces;
+namespace CleanArchitecture.Application.Interfaces;
 
 public interface IJwtTokenGenerator
 {

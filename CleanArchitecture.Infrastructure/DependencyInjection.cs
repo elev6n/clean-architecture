@@ -1,4 +1,5 @@
 using System.Text;
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
 using CleanArchitecture.Infrastructure.Repositories;
@@ -39,9 +40,13 @@ public static class DependencyInjection
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
-            .UsePostgreSqlStorage(connectionString, new PostgreSqlStorageOptions
+            .UsePostgreSqlStorage(options =>
             {
-                SchemaName = "hangfire" // Отдельная схема для Hangfire
+                options.UseNpgsqlConnection(connectionString);
+                new PostgreSqlStorageOptions
+                {
+                    SchemaName = "hangfire",
+                };
             }));
         
         services.AddHangfireServer();

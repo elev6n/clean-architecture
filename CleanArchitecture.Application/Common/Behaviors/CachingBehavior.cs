@@ -1,4 +1,4 @@
-using CleanArchitecture.Domain.Interfaces;
+using CleanArchitecture.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

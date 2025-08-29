@@ -1,8 +1,7 @@
 using System.Linq.Expressions;
-using CleanArchitecture.Domain.Interfaces;
+using CleanArchitecture.Application.Interfaces;
 
 namespace CleanArchitecture.Infrastructure.Services;
-
 public class BackgroundJobService : IBackgroundJobService
 {
     public string Enqueue(Expression<Action> methodCall)
