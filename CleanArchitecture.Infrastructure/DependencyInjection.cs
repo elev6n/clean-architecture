@@ -4,8 +4,6 @@ using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
 using CleanArchitecture.Infrastructure.Repositories;
 using CleanArchitecture.Infrastructure.Services;
-using Hangfire;
-using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,10 +16,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        string connectionString,
         IConfiguration configuration
     )
     {
+        var connectionString = configuration.GetConnectionString("Default");
+
         // Database
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString)
@@ -33,23 +32,6 @@ public static class DependencyInjection
             options.Configuration = configuration.GetConnectionString("Redis");
             options.InstanceName = "CleanArchitecture:";
         });
-
-
-        // Hangfire
-        services.AddHangfire(config => config
-            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-            .UseSimpleAssemblyNameTypeSerializer()
-            .UseRecommendedSerializerSettings()
-            .UsePostgreSqlStorage(options =>
-            {
-                options.UseNpgsqlConnection(connectionString);
-                new PostgreSqlStorageOptions
-                {
-                    SchemaName = "hangfire",
-                };
-            }));
-        
-        services.AddHangfireServer();
 
         // JWT  
         var jwtSettings = configuration.GetSection("JwtSettings");
