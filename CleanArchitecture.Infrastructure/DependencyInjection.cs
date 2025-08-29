@@ -1,5 +1,5 @@
 using System.Text;
-using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
 using CleanArchitecture.Infrastructure.Repositories;
 using CleanArchitecture.Infrastructure.Services;
@@ -15,7 +15,6 @@ namespace CleanArchitecture.Infrastructure;
 
 public static class DependencyInjection
 {
-    [Obsolete]
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         string connectionString,

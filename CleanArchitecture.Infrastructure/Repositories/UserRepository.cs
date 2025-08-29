@@ -1,5 +1,5 @@
-using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.ValueObjects;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
-using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Users.Commands.CreateUser;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.ValueObjects;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
@@ -9,20 +9,24 @@ namespace CleanArchitecture.Tests.Application.Users;
 
 public class CreateUserCommandHandlerTests
 {
-    private readonly Mock<IUserRepository> _userRepositoryMock;
-
     private readonly CreateUserCommandHandler _handler;
 
+    private readonly Mock<IUserRepository> _userRepositoryMock;
+
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+
+    private readonly Mock<IBackgroundJobService> _backgroundJobServiceMock;
 
     public CreateUserCommandHandlerTests()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
+        _backgroundJobServiceMock = new Mock<IBackgroundJobService>();
         _handler = new CreateUserCommandHandler(
             _userRepositoryMock.Object,
-            Mock.Of<ILogger<CreateUserCommandHandler>>(),
-            _unitOfWorkMock.Object
+            _unitOfWorkMock.Object,
+            _backgroundJobServiceMock.Object,
+            Mock.Of<ILogger<CreateUserCommandHandler>>()
         );
     }
 

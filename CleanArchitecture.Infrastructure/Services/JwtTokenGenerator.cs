@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Domain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CleanArchitecture.Infrastructure.Services;

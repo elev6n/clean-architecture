@@ -1,4 +1,4 @@
-using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Infrastructure.Services;

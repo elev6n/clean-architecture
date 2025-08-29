@@ -1,4 +1,4 @@
-namespace CleanArchitecture.Application.Interfaces;
+namespace CleanArchitecture.Domain.Interfaces;
 
 public interface IUnitOfWork : IDisposable
 {

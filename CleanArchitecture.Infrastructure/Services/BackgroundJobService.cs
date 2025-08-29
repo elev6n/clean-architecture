@@ -1,5 +1,5 @@
-using CleanArchitecture.Application.Interfaces;
 using System.Linq.Expressions;
+using CleanArchitecture.Domain.Interfaces;
 
 namespace CleanArchitecture.Infrastructure.Services;
 

@@ -1,7 +1,7 @@
 using CleanArchitecture.API.Common;
 using CleanArchitecture.Application.Common.Behaviors;
-using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Users.Commands.CreateUser;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Infrastructure;
 using FluentValidation;
 using Hangfire;

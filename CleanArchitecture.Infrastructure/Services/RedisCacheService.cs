@@ -1,6 +1,6 @@
+using CleanArchitecture.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
-using CleanArchitecture.Application.Interfaces;
 
 namespace CleanArchitecture.Infrastructure.Services;
 

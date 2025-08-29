@@ -1,6 +1,6 @@
 using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Application.DTOs;
-using CleanArchitecture.Application.Interfaces;
+using CleanArchitecture.Domain.Interfaces;
 using MediatR;
 
 namespace CleanArchitecture.Application.Users.Queries.GetUserByIdQuery;

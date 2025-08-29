@@ -1,7 +1,7 @@
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.ValueObjects;
 
-namespace CleanArchitecture.Application.Interfaces;
+namespace CleanArchitecture.Domain.Interfaces;
 
 public interface IUserRepository
 {
