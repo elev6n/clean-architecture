@@ -1,3 +1,4 @@
+using CleanArchitecture.Application.Interfaces;
 using CleanArchitecture.Application.Users.Commands.CreateUser;
 using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.Domain.ValueObjects;
