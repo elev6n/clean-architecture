@@ -104,16 +104,17 @@ module Database =
 module Repositories =
     open System.Linq
     open CleanArchitecture.Domain.RepositoryInterfaces
+    open CleanArchitecture.Domain.Exceptions
 
     type UserRepository(dbContext: AppDbContext) =
         interface IUserRepository with
-            member _.GetById(EntityId id) =
+            member this.GetById(EntityId id) =
                 async {
                     let! user = dbContext.Users.FindAsync(id).AsTask() |> Async.AwaitTask
                     return Option.ofObj user
                 }
 
-            member _.GetByEmail(Email email) =
+            member this.GetByEmail(Email email) =
                 async {
                     let! user =
                         dbContext.Users.FirstOrDefaultAsync(fun u ->
@@ -124,8 +125,13 @@ module Repositories =
                     return Option.ofObj user
                 }
 
-            member _.Create request =
+            member this.Create request =
                 async {
+                    let! existingUser = (this :> IUserRepository).GetByEmail request.Email
+
+                    if Option.isSome existingUser then
+                        raise (ConflictException $"User with email {request.Email} already exists")
+
                     let user: User =
                         { Id = EntityId(Guid.NewGuid())
                           Email = request.Email
@@ -138,7 +144,7 @@ module Repositories =
                     return user
                 }
 
-            member _.GetAll() =
+            member this.GetAll() =
                 async {
                     let! users = dbContext.Users.ToListAsync() |> Async.AwaitTask
                     return users |> List.ofSeq

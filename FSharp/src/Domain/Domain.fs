@@ -2,6 +2,19 @@
 
 open System
 
+module Exceptions =
+    type DomainException(message: string) =
+        inherit Exception(message)
+
+    type ValidationException(message: string) =
+        inherit Exception(message)
+
+    type NotFoundException(message: string) =
+        inherit Exception(message)
+
+    type ConflictException(message: string) =
+        inherit Exception(message)
+
 module Common =
     type EntityId = EntityId of Guid
     type Email = Email of string
