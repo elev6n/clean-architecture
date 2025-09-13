@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Compile Include="Controllers\UsersController.fs" />
+    <Compile Include="Middleware\ExceptionHandlerMiddleware.fs" />
+    <Compile Include="Middleware\RequestLoggingMiddleware.fs" />
+    <Compile Include="Middleware\ValidationMiddleware.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

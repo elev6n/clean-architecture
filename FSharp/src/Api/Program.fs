@@ -7,6 +7,8 @@ open CleanArchitecture.Infrastructure.Repositories
 open CleanArchitecture.Domain.RepositoryInterfaces
 open CleanArchitecture.Infrastructure
 open CleanArchitecture.Infrastructure.Database
+open CleanArchitecture.Api.middleware
+open CleanArchitecture.Api.Middleware
 
 let builder = WebApplication.CreateBuilder()
 
@@ -55,6 +57,10 @@ try
     dbContext.Database.Migrate()
 with 
 | ex -> printfn "Migration failed: %s" ex.Message
+
+app.UseMiddleware<ExceptionHandlerMiddleware>() |> ignore
+app.UseMiddleware<RequestLoggingMiddleware>() |> ignore
+app.UseMiddleware<ValidationMiddleware>() |> ignore
 
 // Конфигурация middleware
 if app.Environment.IsDevelopment() then
